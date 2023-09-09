@@ -40,6 +40,8 @@ fn main() {
     file_examples::read_file("hello.txt");
     println!("<-------- END --------->");
 
+    file_examples::write_file("world.txt", "Hello there!");
+
     let n: usize = 20; // Max value of 186 can be calcuated before integer overflow of u128 type.
     print!("The first {n} numbers in the fibonacci sequence are: ");
     for i in fibonacci::generate(n) {
