@@ -1,5 +1,6 @@
 mod collection_examples;
 mod file_examples;
+mod fibonacci;
 
 use collection_examples::pig_latin;
 use collection_examples::vec_and_map;
@@ -38,4 +39,15 @@ fn main() {
     println!("<------- START -------->");
     file_examples::read_file("hello.txt");
     println!("<-------- END --------->");
+
+    let n: usize = 20; // Max value of 186 can be calcuated before integer overflow of u128 type.
+    print!("The first {n} numbers in the fibonacci sequence are: ");
+    for i in fibonacci::generate(n) {
+        print!("{i}, ");
+    }
+    println!();
+
+    // Significantly slows down after n > 40.
+    print!("The {n} number in the fibonacci sequence is: ");
+    println!("{}", fibonacci::generate_recursive(n as u32));
 }
