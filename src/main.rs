@@ -37,7 +37,12 @@ fn main() {
 
     println!("Reading contents of 'hello.txt':");
     println!("<------- START -------->");
-    file_examples::read_file("hello.txt");
+    let data = file_examples::read_file_improved("hello.txt").expect("Could not read data.");
+    println!("{data}");
+    println!("<-------- END --------->");
+    println!("<------- START -------->");
+    let data = file_examples::read_to_string("hello.txt").expect("Could not read data.");
+    println!("{data}");
     println!("<-------- END --------->");
 
     file_examples::write_file("world.txt", "Hello there!");

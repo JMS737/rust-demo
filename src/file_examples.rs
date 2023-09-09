@@ -1,11 +1,13 @@
 // Source: https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html
 use std::{
+    fs,
     fs::File,
+    io,
     io::Write,
     io::{ErrorKind, Read},
 };
 
-pub fn read_file_basic(path: &str) {
+pub fn read_file_basic(path: &str) -> String {
     let file_result = File::open(path);
 
     let mut file = match file_result {
@@ -23,12 +25,12 @@ pub fn read_file_basic(path: &str) {
 
     let mut buffer = String::new();
     match file.read_to_string(&mut buffer) {
-        Ok(_) => println!("{buffer}"),
+        Ok(_) => buffer,
         Err(e) => panic!("Problem reading the file '{path}', message {e}"),
     }
 }
 
-pub fn read_file(path: &str) {
+pub fn read_file(path: &str) -> String {
     let mut file = File::open(path).unwrap_or_else(|error| {
         if error.kind() == ErrorKind::NotFound {
             println!("File '{path}' doesn't exist, attempting to create.");
@@ -42,7 +44,20 @@ pub fn read_file(path: &str) {
     file.read_to_string(&mut buffer)
         .expect("Failed to read data");
 
-    println!("{buffer}");
+    buffer
+}
+
+pub fn read_file_improved(path: &str) -> Result<String, io::Error> {
+    let mut buffer = String::new();
+
+    // '?' operator will return the Err value early if Result::Err(), or return the value<T> if Result::Ok<T>()
+    File::open(path)?.read_to_string(&mut buffer)?;
+
+    Ok(buffer)
+}
+
+pub fn read_to_string(path: &str) -> Result<String, io::Error> {
+    fs::read_to_string(path)
 }
 
 pub fn write_file(path: &str, content: &str) {
