@@ -1,4 +1,5 @@
 mod collection_examples;
+mod file_examples;
 
 use collection_examples::pig_latin;
 use collection_examples::vec_and_map;
@@ -32,4 +33,9 @@ fn main() {
 
     println!("Pig latin: {}", pig_latin::from(sentence));
     println!("Original: {}", sentence);
+
+    println!("Reading contents of 'hello.txt':");
+    println!("<------- START -------->");
+    file_examples::read_file("hello.txt");
+    println!("<-------- END --------->");
 }
